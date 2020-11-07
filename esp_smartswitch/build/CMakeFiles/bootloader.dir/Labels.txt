@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+D:/_workspace/git_wkspace/esp_smartswitch/build/CMakeFiles/bootloader
+D:/_workspace/git_wkspace/esp_smartswitch/build/CMakeFiles/bootloader.rule
+D:/_workspace/git_wkspace/esp_smartswitch/build/CMakeFiles/bootloader-complete.rule
+D:/_workspace/git_wkspace/esp_smartswitch/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+D:/_workspace/git_wkspace/esp_smartswitch/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+D:/_workspace/git_wkspace/esp_smartswitch/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+D:/_workspace/git_wkspace/esp_smartswitch/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
+D:/_workspace/git_wkspace/esp_smartswitch/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+D:/_workspace/git_wkspace/esp_smartswitch/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+D:/_workspace/git_wkspace/esp_smartswitch/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule
