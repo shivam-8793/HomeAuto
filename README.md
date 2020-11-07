@@ -1,3 +1,3 @@
 # HomeAuto
 eass- home automation project
-- just comment
+- to build project: open console.bat >>idf.py build
