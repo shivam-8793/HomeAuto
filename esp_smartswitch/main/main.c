@@ -1,10 +1,23 @@
+/*========================================== [EASS solutions] Smart Switch Board ==========================================*\
+   main app
+
+ * Summery:- cyclic running main state machine of smart switch board feature
+\*=========================================================================================================================*/
+
 #include <stdio.h>
 #include "port.h"
 #include "comm.h"
-#include "app_types.h"
 #include "monitor.h"
 #include "control.h"
 #include "switch_table.h"
+
+typedef enum{
+    IDL,
+    MONITOR,
+    CONTROL
+}app_state_t;
+
+void app_task(void);
 
 void app_main(void)
 {
@@ -14,41 +27,46 @@ void app_main(void)
    }
 }
 
-void app_task(void)
+static void app_task(void)
 {
-   static APP_STATE_T state = IDL;
+   static app_state_t state = IDL;
 
    switch (state)
    {
       case IDL:
-         SwitchTable_load();
-         state = MONITOR;
-         break;
+         {
+            SwitchTable_load();
+            state = MONITOR;
+            break;
+         }
 
       case MONITOR:
-         Get_HardSwitch_Status();
-
-         if(Is_Any_Toggle_Detected())
          {
-            SwitchTable_Update();
-            SendUpdate_ToNw();
-            if(Is_HardRegl_Toggle())
+            Get_HardSwitch_Status();
+
+            if(Is_Any_Toggle_Detected())
             {
-               SendUpdate_ToReglMicro();
+               SwitchTable_Update();
+               SendUpdate_ToNw();
+               if(Is_HardRegl_Toggle())
+               {
+                  SendUpdate_ToReglMicro();
+               }
             }
+
+            state = CONTROL;
+            break;
          }
 
-         state = CONTROL;
-         
-         break;
-      
       case CONTROL:
-         if(Is_Automation_on())
          {
-            Control_Switches();
+            if(Is_Automation_on())
+            {
+               Control_Switches();
+            }
+            state = MONITOR;
+            break;
          }
-         state = MONITOR;
-         break;
 
       default:
          break;
@@ -56,3 +74,8 @@ void app_task(void)
 
 return;
 }
+
+/*================================================== Revision History =====================================================*\
+   Developer       Rev Date       Comments
+ * Shivam          08-11-2020     Initial Version
+\*=========================================================================================================================*/

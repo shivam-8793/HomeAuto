@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include "control.h"
 
-char Is_Automation_on(void)
+uint8_t Is_Automation_on(void)
 {
-   return 0;
+   return 5;
 }
 
 void Control_Switches()
