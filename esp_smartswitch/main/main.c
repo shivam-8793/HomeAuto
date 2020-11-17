@@ -4,7 +4,6 @@
  * Summery:- cyclic running main state machine of smart switch board feature
 \*=========================================================================================================================*/
 
-#include <stdio.h>
 #include "port.h"
 #include "comm.h"
 #include "monitor.h"
@@ -12,12 +11,12 @@
 #include "switch_table.h"
 
 typedef enum{
-    IDL,
-    MONITOR,
-    CONTROL
+   IDL,
+   MONITOR,
+   CONTROL
 }app_state_t;
 
-void app_task(void);
+static void app_task(void);
 
 void app_main(void)
 {
@@ -27,6 +26,10 @@ void app_main(void)
    }
 }
 
+/**
+ * app_task
+   -- main cyclic task
+*/
 static void app_task(void)
 {
    static app_state_t state = IDL;

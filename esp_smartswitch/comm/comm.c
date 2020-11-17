@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "comm.h"
 
 void SendUpdate_ToNw(void)
