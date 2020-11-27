@@ -9,6 +9,7 @@
 #include "monitor.h"
 #include "control.h"
 #include "switch_table.h"
+#include <stdio.h>
 
 typedef enum{
    IDL,
@@ -33,12 +34,13 @@ void app_main(void)
 static void app_task(void)
 {
    static app_state_t state = IDL;
+   static switchtable_t switchtable_volatile = { 0 };
 
    switch (state)
    {
       case IDL:
          {
-            SwitchTable_load();
+            SwitchTable_load(&switchtable_volatile);
             state = MONITOR;
             break;
          }
