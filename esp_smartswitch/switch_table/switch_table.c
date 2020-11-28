@@ -44,8 +44,8 @@ void SwitchTable_load(switchtable_t *switch_table_read_ptr)
 
    /* Read */
    printf("Reading switch table from NVS ... ");
-   size_t len = sizeof(*switch_table_volatile_ptr);
-   err = nvs_get_blob(my_handle, "switches", (void *)switch_table_read_ptr,&len);
+   size_t len = sizeof(*switch_table_read_ptr);
+   err = nvs_get_blob(my_handle, "switch_table", (void *)switch_table_read_ptr,&len);
    switch (err) {
       case ESP_OK:
             printf("Done\n");
