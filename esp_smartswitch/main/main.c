@@ -28,19 +28,22 @@ void app_main(void)
 }
 
 /**
- * app_task
-   -- main cyclic task
-*/
+ * Main cyclic task
+ * 
+ * @param void
+ * @return void
+ */
 static void app_task(void)
 {
    static app_state_t state = IDL;
-   static switchtable_t switchtable_volatile = { 0 };
+   static switchtable_t switchtable_buff = { 0 };
 
    switch (state)
    {
       case IDL:
          {
-            SwitchTable_load(&switchtable_volatile);
+            /* loading switch table from Non Volatile Storage */
+            SwitchTable_load(&switchtable_buff);
             state = MONITOR;
             break;
          }

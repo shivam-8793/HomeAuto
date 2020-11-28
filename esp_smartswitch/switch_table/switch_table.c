@@ -1,7 +1,7 @@
 /*========================================== [EASS solutions] Smart Switch Board ==========================================*\
    switch_table.c
 
- * Summery:- APIs for switch state table handling.
+ * Summery:- APIs for handling switch table in NVS (Non Volatile Storage).
 \*=========================================================================================================================*/
 
 #include <stdio.h>
@@ -10,19 +10,26 @@
 #include "nvs_flash.h"
 #include "nvs.h"
 
-void SwitchTable_load(switchtable_t *switch_table_volatile_ptr)
+
+/**
+ * Load switch table from NVS.
+ * 
+ * @param out pointer to switch table read buffer
+ * @return void
+ */
+void SwitchTable_load(switchtable_t *switch_table_read_ptr)
 {
-   // Initialize NVS
+   /* Initialize NVS */
    esp_err_t err = nvs_flash_init();
    if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-      // NVS partition was truncated and needs to be erased
-      // Retry nvs_flash_init
+      /* NVS partition was truncated and needs to be erased */
+      /* Retry nvs_flash_init */
       ESP_ERROR_CHECK(nvs_flash_erase());
       err = nvs_flash_init();
    }
    ESP_ERROR_CHECK( err );
 
-   // Open
+   /* Open */
    printf("\n");
    printf("Opening Non-Volatile Storage (NVS) handle... ");
    nvs_handle_t my_handle;
@@ -35,10 +42,10 @@ void SwitchTable_load(switchtable_t *switch_table_volatile_ptr)
    {
    printf("Done\n");
 
-   // Read
-   printf("Reading restart counter from NVS ... ");
+   /* Read */
+   printf("Reading switch table from NVS ... ");
    size_t len = sizeof(*switch_table_volatile_ptr);
-   err = nvs_get_blob(my_handle, "restart_counter", (void *)switch_table_volatile_ptr,&len);
+   err = nvs_get_blob(my_handle, "switches", (void *)switch_table_read_ptr,&len);
    switch (err) {
       case ESP_OK:
             printf("Done\n");
@@ -50,7 +57,7 @@ void SwitchTable_load(switchtable_t *switch_table_volatile_ptr)
             printf("Error (%s) reading!\n", esp_err_to_name(err));
    }
 
-   // Close
+   /* Close */
    nvs_close(my_handle);
    }
 
