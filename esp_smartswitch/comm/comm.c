@@ -1,6 +1,6 @@
 #include "comm.h"
 
-void SendUpdate_ToNw(void)
+void DeviceTable_ToNw(device_state_table_t device_state_table )
 {
 
 }

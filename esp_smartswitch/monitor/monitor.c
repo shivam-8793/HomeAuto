@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdbool.h>
 #include "monitor.h"
 
 void Get_HardSwitch_Status(void)
@@ -6,13 +6,18 @@ void Get_HardSwitch_Status(void)
 
 }
 
-char Is_Any_Toggle_Detected(void)
+bool Is_Any_Switch_Toggle( device_state_table_t *device_states_buff_ptr, device_state_table_t *switch_states_buff_ptr )
 {
-   return 0;
+   return false;
 }
 
 
-char Is_HardRegl_Toggle(void)
+bool Is_ReglSwitch_Toggle(void)
 {
-   return 0;
+   return false;
+}
+
+void SwitchStates_Read( device_state_table_t *switch_states_buff_ptr )
+{
+
 }
