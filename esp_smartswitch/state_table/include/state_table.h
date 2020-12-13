@@ -20,9 +20,9 @@ typedef struct DeiceTable_Tag{
    uint8_t dev_3:1;
    uint8_t dev_reg1:4;
 #if ( 1 == BOARD_TYPE )
+   uint8_t dev_4:1;
    uint8_t dev_5:1;
    uint8_t dev_6:1;
-   uint8_t dev_7:1;
    uint8_t dev_reg2:4;
 #endif
 }device_state_table_t;
