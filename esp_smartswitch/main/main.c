@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include "esp_wifi.h"
 
-typedef enum{
+typedef enum AppStateTag{
    IDL,
    MONITOR,
    CONTROL
@@ -24,7 +24,7 @@ static void app_task(void);
 
 void app_main(void)
 {
-   
+   port_init();
    while (1)
    {
       app_task();
@@ -35,20 +35,20 @@ void app_main(void)
  * Main cyclic task
  * 
  * @param void
- * @return void
+ * @return
  */
 static void app_task(void)
 {
    static app_state_t state = IDL;
    static device_state_table_t device_states_buff = { 0 };
-   static device_state_table_t switch_states_buff = { 0 };
+   static device_state_table_t switch_states_buff = { 0 };    /* volatile storage for switch states. */
 
    switch (state)
    {
       case IDL:
          {
             DeviceStateTable_Load( &device_states_buff ); /* loading Device State table from Non Volatile Storage */
-            SwitchStates_Read( &switch_states_buff );     /* reading initial states of hard switches */
+            SwitchStates_Read( &switch_states_buff );     /* reading initial states of switches */
             state = MONITOR;
             break;
          }
@@ -56,15 +56,10 @@ static void app_task(void)
       case MONITOR:
          {
 
-            if( Is_Any_Switch_Toggle( &device_states_buff, &switch_states_buff ) )
+            if( Monitor_Switches( &device_states_buff, &switch_states_buff ) )
             {
                DeviceStateTable_Update(device_states_buff); /* update the device table in NVS */
-               DeviceTable_ToNw(device_states_buff);
-
-               if(Is_ReglSwitch_Toggle())
-               {
-                  SendUpdate_ToReglMicro();
-               }
+               Send_DeviceTable_ToNw(device_states_buff);
             }
 
             state = CONTROL;
@@ -89,6 +84,6 @@ return;
 }
 
 /*================================================== Revision History =====================================================*\
-   Developer       Rev Date       Comments
+   Author       Rev Date       Comments
  * Shivam          08-11-2020     Initial Version
 \*=========================================================================================================================*/
